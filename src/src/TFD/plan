@@ -1,0 +1,10 @@
+#! /bin/bash
+
+export PATH=$PATH:./$ROOT/search
+
+
+if [ $# != 3 ] ; then
+    echo "Usage: plan <domainFile> <problemFile> <solutionFile>"
+else
+    python "$(dirname "$0")"/plan.py ayYe $1 $2 $3
+fi

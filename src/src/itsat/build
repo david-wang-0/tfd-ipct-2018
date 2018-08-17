@@ -1,0 +1,7 @@
+#! /bin/bash
+
+make clean
+make
+
+cp gccRelease/tsat.exe ./plan
+

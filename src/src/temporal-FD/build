@@ -1,0 +1,12 @@
+#! /bin/bash
+
+cd preprocess
+mkdir .obj/
+make release || exit 1
+cd ..
+
+cd search
+mkdir .obj/
+make release || exit 1
+exit
+

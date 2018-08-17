@@ -1,0 +1,8 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+ROOT=$PWD
+
+cd $ROOT/cpt-yahsp
+mkdir $ROOT/cpt-yahsp/release/
+./distclean
+./build_gcc_linux_release cpt_yahsp

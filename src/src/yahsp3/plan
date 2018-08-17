@@ -1,0 +1,3 @@
+#!/bin/bash
+
+"$(dirname "$0")"/cpt-yahsp/release/cpt_yahsp -y 1 -N -K 0.01,0.01 -o "$1" -f "$2" -out "$3"

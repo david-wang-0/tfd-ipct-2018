@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+<<<<<<< Updated upstream
 import os.path
 import re
 
@@ -19,6 +20,29 @@ def parse_pddl_file(type, filename):
     raise SystemExit("Error: Could not parse %s file: %s\n" % (type, filename))
 
 def open(task_filename=None, domain_filename=None):
+=======
+import os
+import re
+
+import pddl.parser as parser
+import pddl.tasks as tasks
+
+def parse_pddl_file(type, filename):
+  try:
+    with open(filename, 'r') as f:
+      lines = f.readlines()
+      return parser.parse_nested_list(lines)
+  except IOError as e:
+    raise SystemExit("Error: Could not read file: %s\nReason: %s." %
+                    (e.filename, e))
+  except FileNotFoundError as e:
+    raise SystemExit("Error: Could not find file: %s\nReason: %s." %
+                    (e.filename, e))
+  except parser.ParseError as e:
+    raise SystemExit("Error: Could not parse %s file: %s\n" % (type, filename))
+
+def open_pddl(task_filename=None, domain_filename=None):
+>>>>>>> Stashed changes
   if task_filename is None:
     if len(sys.argv) not in (2, 3):
       raise SystemExit("Error: Need exactly one or two command line arguments.\n"

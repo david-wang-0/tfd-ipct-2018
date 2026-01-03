@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import conditions
 import tasks
 import f_expression
@@ -6,6 +7,16 @@ import pddl_types
 def cartesian_product(*sequences):
   # TODO: Also exists in tools.py outside the pddl package (defined slightly
   #       differently). Not good. Need proper import paths.
+=======
+import pddl.conditions as conditions
+import pddl.tasks as tasks
+import pddl.f_expression as f_expression
+import pddl.pddl_types as pddl_types
+
+def cartesian_product(*sequences):
+  # TODO: Also exists in tools.py outside the pddl package (defined slightly
+  #       differently). Not good. Need proper from pddl.paths. import *
+>>>>>>> Stashed changes
   if not sequences:
     yield ()
   else:
@@ -126,17 +137,29 @@ class Effect(object):
   def dump(self):
     indent = "  "
     if self.parameters:
+<<<<<<< Updated upstream
       print "%sforall %s" % (indent, ", ".join(map(str, self.parameters)))
+=======
+      print("%sforall %s" % (indent, ", ".join(map(str, self.parameters))))
+>>>>>>> Stashed changes
       indent += "  "
     if ((isinstance(self.condition,list) and 
         self.condition != [conditions.Truth(),conditions.Truth(),conditions.Truth()])
        or (not isinstance(self.condition,list) and self.condition != conditions.Truth())):
+<<<<<<< Updated upstream
       print "%sif" % indent
+=======
+      print("%sif" % indent)
+>>>>>>> Stashed changes
       if isinstance(self.condition,list):
         conditions.dump_temporal_condition(self.condition,indent + "  ")
       else:
         self.condition.dump(indent + "  ")
+<<<<<<< Updated upstream
       print "%sthen" % indent
+=======
+      print("%sthen" % indent)
+>>>>>>> Stashed changes
       indent += "  "
     self.peffect.dump(indent)
   def copy(self):
@@ -209,9 +232,15 @@ class TmpEffect(object):
         self.time = time
     def dump(self, indent="  "):
         if self.time:
+<<<<<<< Updated upstream
             print "%sat %s:" %(indent,self.time)
             indent += "  "
         print "%sand" % (indent)
+=======
+            print("%sat %s:" %(indent,self.time))
+            indent += "  "
+        print("%sand" % (indent))
+>>>>>>> Stashed changes
         for eff in self.effects:
             eff.dump(indent + "  ")
     def _dump(self):
@@ -238,14 +267,24 @@ class ConditionalEffect(TmpEffect):
         assert len(self.effects) == 1
     def dump(self, indent="  "):
         if self.time:
+<<<<<<< Updated upstream
             print "%sat %s:" %(indent,self.time)
             indent += "  "
         print "%sif" % (indent)
+=======
+            print("%sat %s:" %(indent,self.time))
+            indent += "  "
+        print("%sif" % (indent))
+>>>>>>> Stashed changes
         if isinstance(self.condition,list):
             conditions.dump_temporal_condition(self.condition,indent + "  ")
         else:
             self.condition.dump(indent + "  ")
+<<<<<<< Updated upstream
         print "%sthen" % (indent)
+=======
+        print("%sthen" % (indent))
+>>>>>>> Stashed changes
         self.effects[0].dump(indent + "  ")
     def normalize(self):
         normalized = self.effects[0].normalize()
@@ -278,9 +317,15 @@ class UniversalEffect(TmpEffect):
         assert len(self.effects) == 1
     def dump(self, indent="  "):
         if self.time:
+<<<<<<< Updated upstream
             print "%sat %s:" %(indent,self.time)
             indent += "  "
         print "%sforall %s" % (indent, ", ".join(map(str, self.parameters)))
+=======
+            print("%sat %s:" %(indent,self.time))
+            indent += "  "
+        print("%sforall %s" % (indent, ", ".join(map(str, self.parameters))))
+>>>>>>> Stashed changes
         self.effects[0].dump(indent + "  ")
     def normalize(self):
         effect = self.effects[0].normalize()
@@ -346,7 +391,11 @@ class ObjectFunctionAssignment(object):
         self.head = head    # term
         self.value = value  # term
     def dump(self, indent="  "):
+<<<<<<< Updated upstream
         print "%sassign" % (indent)
+=======
+        print("%sassign" % (indent))
+>>>>>>> Stashed changes
         self.head.dump(indent + "  ")
         self.value.dump(indent + "  ")
     def rename_variables(self, renamings):

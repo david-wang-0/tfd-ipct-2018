@@ -4,7 +4,11 @@ import sas_tasks
 from collections import defaultdict
 
 def handle_axioms(operators, durative_operators, axioms, goals):
+<<<<<<< Updated upstream
     print "Processing axioms..."
+=======
+    print("Processing axioms...")
+>>>>>>> Stashed changes
 
     axioms_by_atom = get_axioms_by_atom(axioms)
 
@@ -33,7 +37,11 @@ def handle_axioms(operators, durative_operators, axioms, goals):
     # NOTE: compute_negative_axioms more or less invalidates axioms_by_atom.
     #       Careful with that axe, Eugene!
     axiom_layers = compute_axiom_layers(axioms, axiom_init)
+<<<<<<< Updated upstream
     print "Found", len(true_atoms), "axioms that are always true and", len(false_atoms), "that are always false"
+=======
+    print("Found", len(true_atoms), "axioms that are always true and", len(false_atoms), "that are always false")
+>>>>>>> Stashed changes
     return axioms, list(axiom_init), axiom_layers, true_atoms, false_atoms
 
 def get_axioms_by_atom(axioms):
@@ -86,7 +94,11 @@ def compute_axiom_layers(axioms, axiom_init):
         find_level(atom, FIRST_MARKER)
 
     #for atom, layer in layers.iteritems():
+<<<<<<< Updated upstream
     #  print "Layer %d: %s" % (layer, atom)
+=======
+    #  print("Layer %d: %s") % (layer, atom)
+>>>>>>> Stashed changes
     return layers
 
 def compute_necessary_axiom_literals(axioms_by_atom, operators, 

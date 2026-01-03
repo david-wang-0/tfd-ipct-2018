@@ -33,12 +33,21 @@ class DomainTransitionGraph(object):
         return reachable
         
     def dump(self):
+<<<<<<< Updated upstream
         print "SIZE", self.size
         print "INIT", self.init
         print "ARCS:"
         for source, destinations in sorted(self.arcs.items()):
             for destination in sorted(destinations):
                 print "  %d => %d" % (source, destination)
+=======
+        print("SIZE"), self.size
+        print("INIT"), self.init
+        print("ARCS:")
+        for source, destinations in sorted(self.arcs.items()):
+            for destination in sorted(destinations):
+                print("  %d => %d") % (source, destination)
+>>>>>>> Stashed changes
 
 
 def build_dtgs(task):
@@ -149,11 +158,19 @@ class VarValueRenaming(object):
                 new_operators.append(op)
             except (Impossible, DoesNothing):
                 if DEBUG:
+<<<<<<< Updated upstream
                     print "Removed operator: %s" % op.name
         operators[:] = new_operators
 
     def apply_to_axioms(self, axioms):
         print axioms
+=======
+                    print("Removed operator: %s") % op.name
+        operators[:] = new_operators
+
+    def apply_to_axioms(self, axioms):
+        print(axioms)
+>>>>>>> Stashed changes
         new_axioms = []
         for axiom in axioms:
             try:
@@ -161,7 +178,11 @@ class VarValueRenaming(object):
                 new_axioms.append(axiom)
             except (Impossible, DoesNothing):
                 if DEBUG:
+<<<<<<< Updated upstream
                     print "Removed axiom:"
+=======
+                    print("Removed axiom:")
+>>>>>>> Stashed changes
                     axiom.dump()
         axioms[:] = new_axioms
 
@@ -195,7 +216,12 @@ class VarValueRenaming(object):
             raise DoesNothing
         axiom.effect = new_var, new_value
 
+<<<<<<< Updated upstream
     def translate_pre_post(self, (var_no, pre, post, cond)):
+=======
+    def translate_pre_post(self, x):
+        var_no, pre, post, cond = x
+>>>>>>> Stashed changes
         new_var_no, new_post = self.translate_pair((var_no, post))
         if pre == -1:
             new_pre = -1
@@ -216,7 +242,12 @@ class VarValueRenaming(object):
             raise DoesNothing
         return new_var_no, new_pre, new_post, cond
 
+<<<<<<< Updated upstream
     def translate_pair(self, (var_no, value)):
+=======
+    def translate_pair(self, x):
+        var_no, value = x
+>>>>>>> Stashed changes
         new_var_no = self.new_var_nos[var_no]
         new_value = self.new_values[var_no][value]
         return new_var_no, new_value
@@ -239,10 +270,17 @@ class VarValueRenaming(object):
                 new_var_no, new_value = self.translate_pair((var_no, value))
                 if new_value is always_true:
                     if DEBUG:
+<<<<<<< Updated upstream
                         print "Removed true proposition: %s" % value_name
                 elif new_value is always_false:
                     if DEBUG:
                         print "Removed false proposition: %s" % value_name
+=======
+                        print("Removed true proposition: %s") % value_name
+                elif new_value is always_false:
+                    if DEBUG:
+                        print("Removed false proposition: %s") % value_name
+>>>>>>> Stashed changes
                 else:
                     new_key[new_var_no][new_value] = value_name
         assert all((None not in value_names) for value_names in new_key)
@@ -271,6 +309,7 @@ def build_renaming(dtgs):
 
 def dump_translation_key(translation_key):
     for var_no, values in enumerate(translation_key):
+<<<<<<< Updated upstream
         print "var %d:" % var_no
         for value_no, value in enumerate(values):
             print "%2d: %s" % (value_no, value)
@@ -279,6 +318,16 @@ def filter_unreachable_propositions(sas_task, mutex_key, translation_key):
     print "**sas_task"
     sas_task.output(sys.stdout)
     print "Detecting unreachable propositions...",
+=======
+        print("var %d:") % var_no
+        for value_no, value in enumerate(values):
+            print("%2d: %s") % (value_no, value)
+
+def filter_unreachable_propositions(sas_task, mutex_key, translation_key):
+    print("**sas_task")
+    sas_task.output(sys.stdout)
+    print("Detecting unreachable propositions..."),
+>>>>>>> Stashed changes
     sys.stdout.flush()
     if DEBUG:
         print
@@ -310,7 +359,11 @@ def filter_unreachable_propositions(sas_task, mutex_key, translation_key):
     renaming.apply_to_task(sas_task)
     renaming.apply_to_translation_key(translation_key)
     renaming.apply_to_mutex_key(mutex_key)
+<<<<<<< Updated upstream
     print "%d propositions removed." % renaming.num_removed_values
+=======
+    print("%d propositions removed.") % renaming.num_removed_values
+>>>>>>> Stashed changes
 
 def constrain_end_effect_conditions(sas_task):
     pre_by_operator_and_var = dict(); 
@@ -363,4 +416,8 @@ def constrain_end_effect_conditions(sas_task):
                 op.pre_post[1][index] = (var, new_pre , post, cond)
                 nr_changed += 1
 
+<<<<<<< Updated upstream
     print "constrained %s conditions" % nr_changed
+=======
+    print("constrained %s conditions") % nr_changed
+>>>>>>> Stashed changes

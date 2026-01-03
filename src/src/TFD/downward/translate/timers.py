@@ -25,6 +25,7 @@ class Timer(object):
 def timing(text, block=False):
     timer = Timer()
     if block:
+<<<<<<< Updated upstream
         print "%s..." % text
     else:
         print "%s..." % text,
@@ -34,4 +35,15 @@ def timing(text, block=False):
         print "%s: %s" % (text, timer)
     else:
         print timer
+=======
+        print("%s..." % text)
+    else:
+        print("%s..." % text,
+    sys.stdout.flush())
+    yield
+    if block:
+        print("%s: %s" % (text, timer))
+    else:
+        print(timer)
+>>>>>>> Stashed changes
     sys.stdout.flush()

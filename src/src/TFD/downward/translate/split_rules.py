@@ -19,7 +19,11 @@ def get_connected_conditions(conditions):
         var_to_conditions[var].append(cond)
 
   # Connect conditions with a common variable
+<<<<<<< Updated upstream
   for var, conds in var_to_conditions.iteritems():
+=======
+  for var, conds in var_to_conditions.items():
+>>>>>>> Stashed changes
     for cond in conds[1:]:
       agraph.connect(conds[0], cond)
   return agraph.connected_components()
@@ -65,6 +69,10 @@ def split_rule(rule, name_generator):
   return result
 
 def split_into_binary_rules(rule, name_generator):
+<<<<<<< Updated upstream
+=======
+  print("conditions:", rule, rule.conditions)
+>>>>>>> Stashed changes
   if len(rule.conditions) <= 1:
     rule.type = "project"
     return [rule]

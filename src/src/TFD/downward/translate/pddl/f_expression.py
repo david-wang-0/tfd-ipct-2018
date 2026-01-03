@@ -1,5 +1,10 @@
 import string
+<<<<<<< Updated upstream
 import conditions
+=======
+import locale
+import pddl.conditions as conditions
+>>>>>>> Stashed changes
 
 def isFloat(astring):
     try:
@@ -34,7 +39,11 @@ def parse_expression(exp, durative=False):
                 assert len(args) == 2
                 return Difference(args)
     elif isFloat(exp):
+<<<<<<< Updated upstream
         return NumericConstant(string.atof(exp))
+=======
+        return NumericConstant(locale.atof(exp))
+>>>>>>> Stashed changes
     elif exp == "?duration":
         return DurationVariable()
     else:
@@ -71,7 +80,11 @@ class FunctionalExpression(object):
             result |= part.free_variables()
         return result
     def dump(self, indent="  "):
+<<<<<<< Updated upstream
         print "%s%s" % (indent, self._dump())
+=======
+        print("%s%s" % (indent, self._dump()))
+>>>>>>> Stashed changes
         for part in self.parts:
             part.dump(indent + "  ")
     def _dump(self):
@@ -101,7 +114,11 @@ class FunctionalExpression(object):
         return (typed_vars,conjunction_parts,self.__class__(new_parts))
     def  instantiate(self, var_mapping, fluent_functions, 
                         init_function_vals, task, new_axioms=[]):
+<<<<<<< Updated upstream
         print self.__class__.__name__
+=======
+        print(self.__class__.__name__)
+>>>>>>> Stashed changes
         raise ValueError("Cannot instantiate condition: not normalized")
         
 
@@ -190,6 +207,11 @@ class NumericConstant(FunctionalExpression):
         return (self.__class__ == other.__class__ and self.value == other.value)
     def __str__(self):
         return str(self.value)
+<<<<<<< Updated upstream
+=======
+    def __hash__(self):
+        return self.hash
+>>>>>>> Stashed changes
     def _dump(self):
         return self.value
     def rename_variables(self, renamings={}):
@@ -217,8 +239,15 @@ class PrimitiveNumericExpression(FunctionalExpression):
                 self.hash == other.hash and
                 self.symbol == other.symbol and 
                 self.args == other.args) 
+<<<<<<< Updated upstream
     def dump(self, indent="  "):
         print "%s%s" % (indent, self._dump())
+=======
+    def __hash__(self):
+        return self.hash
+    def dump(self, indent="  "):
+        print("%s%s" % (indent, self._dump()))
+>>>>>>> Stashed changes
         for arg in self.args:
             arg.dump(indent + "  ")
     def _dump(self):
@@ -269,6 +298,11 @@ class FunctionAssignment(object):
         self.fluent = fluent
         self.expression = expression
         self.hash = hash((self.__class__.__name__, self.fluent, self.expression))
+<<<<<<< Updated upstream
+=======
+    def __hash__(self):
+        return self.hash
+>>>>>>> Stashed changes
     def __str__(self):
         return "%s %s %s" % (self.__class__.__name__, self.fluent, self.expression) 
     def __eq__(self, other):
@@ -277,7 +311,11 @@ class FunctionAssignment(object):
                 self.fluent == other.fluent and
                 self.expression == other.expression)
     def dump(self, indent="  "):
+<<<<<<< Updated upstream
         print "%s%s" % (indent, self._dump())
+=======
+        print("%s%s" % (indent, self._dump()))
+>>>>>>> Stashed changes
         self.fluent.dump(indent + "  ")
         self.expression.dump(indent + "  ")
     def _dump(self):

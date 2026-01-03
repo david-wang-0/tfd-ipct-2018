@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 import pddl_types
+=======
+import pddl.pddl_types as pddl_types
+>>>>>>> Stashed changes
 
 class Predicate(object):
     def __init__(self, name, arguments):

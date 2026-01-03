@@ -73,7 +73,11 @@ def choose_groups(groups, reachable_facts, partial_encoding=True):
         group = queue.pop()
         uncovered_facts.difference_update(group)
         result.append(group)
+<<<<<<< Updated upstream
     print len(uncovered_facts), "uncovered facts"
+=======
+    print(len(uncovered_facts), "uncovered facts")
+>>>>>>> Stashed changes
     result += [[fact] for fact in uncovered_facts]
     return result
 
@@ -90,8 +94,13 @@ def choose_groups_with_object_fluents_first(synthesis_groups, object_fluent_grou
         group = queue.pop()
         uncovered_facts.difference_update(group)
         result.append(group)
+<<<<<<< Updated upstream
     print len(uncovered_facts), \
           "uncovered facts (before using the results from the invariant synthesis)"
+=======
+    print(len(uncovered_facts), 
+          "uncovered facts (before using the results from the invariant synthesis)")
+>>>>>>> Stashed changes
     
     # try to cover uncovered facts by using the groups from the 
     # invariant synthesis
@@ -101,7 +110,11 @@ def choose_groups_with_object_fluents_first(synthesis_groups, object_fluent_grou
         uncovered_facts.difference_update(group)
         result.append(group)
 
+<<<<<<< Updated upstream
     print len(uncovered_facts), "uncovered facts"
+=======
+    print(len(uncovered_facts), "uncovered facts")
+>>>>>>> Stashed changes
     result += [[fact] for fact in uncovered_facts]
     return result
 
@@ -170,18 +183,30 @@ def compute_groups(task, atoms, reachable_action_params,
         objectfluent_groups = create_groups_from_object_fluents(atoms)
    
     if not only_objectfluents:
+<<<<<<< Updated upstream
         print "Finding invariants..."
         groups = invariant_finder.get_groups(task, safe, reachable_action_params)
         groups = sorted(groups, cmp=lambda x,y: cmp(str([str(a) for a in x]), 
                                                     str([str(a) for a in y])))
         print "Instantiating groups..."
+=======
+        print("Finding invariants...")
+        groups = invariant_finder.get_groups(task, safe, reachable_action_params)
+        groups = sorted(groups, cmp=lambda x,y: cmp(str([str(a) for a in x]), 
+                                                    str([str(a) for a in y])))
+        print("Instantiating groups...")
+>>>>>>> Stashed changes
         groups = instantiate_groups(groups, task, atoms)
     
         if return_mutex_groups:
             mutex_groups = collect_all_mutex_groups(groups, atoms) + \
                            objectfluent_groups
 
+<<<<<<< Updated upstream
     print "Choosing groups..."
+=======
+    print("Choosing groups...")
+>>>>>>> Stashed changes
     if use_objectfluents_first:
         groups = choose_groups_with_object_fluents_first(groups, objectfluent_groups,
                  atoms, partial_encoding=partial_encoding)
@@ -192,6 +217,10 @@ def compute_groups(task, atoms, reachable_action_params,
             groups = objectfluent_groups + groups # slightly prefer objectfluent groups
         groups = choose_groups(groups, atoms, partial_encoding=partial_encoding)
 
+<<<<<<< Updated upstream
     print "Building translation key..."
+=======
+    print("Building translation key...")
+>>>>>>> Stashed changes
     translation_key = build_translation_key(groups)
     return groups, mutex_groups, translation_key

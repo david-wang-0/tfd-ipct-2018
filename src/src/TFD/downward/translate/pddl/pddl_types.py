@@ -2,7 +2,11 @@
 # In the future, use explicitly relative imports or absolute
 # imports as a better solution.
 
+<<<<<<< Updated upstream
 import conditions
+=======
+import pddl.conditions as conditions
+>>>>>>> Stashed changes
 
 import graph
 

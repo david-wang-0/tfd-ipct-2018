@@ -146,12 +146,21 @@ class ConstraintSystem(object):
         return other
 
     def dump(self):
+<<<<<<< Updated upstream
         print "AssignmentSystem:"
         for comb_assignment in self.combinatorial_assignments:
             disj = " or ".join([str(assig) for assig in comb_assignment])
             print "  ASS: ", disj
         for neg_clause in self.neg_clauses:
             print "  NEG: ", str(neg_clause)
+=======
+        print("AssignmentSystem:")
+        for comb_assignment in self.combinatorial_assignments:
+            disj = " or ".join([str(assig) for assig in comb_assignment])
+            print("  ASS: ", disj)
+        for neg_clause in self.neg_clauses:
+            print("  NEG: ", str(neg_clause))
+>>>>>>> Stashed changes
         
     def is_solvable(self):
         """Check whether the combinatorial assignments include at least

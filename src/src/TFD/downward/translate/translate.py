@@ -164,7 +164,11 @@ def translate_strips_conditions_aux(conditions, dictionary, ranges, comparison_a
                         return None
                     condition[var] = set([val])
             except KeyError as e:
+<<<<<<< Updated upstream
                 print "Atom not in dictionary: ", fact.dump()
+=======
+                print ("Atom not in dictionary: ", fact.dump())
+>>>>>>> Stashed changes
                 raise
 
     # Now deal with the negated conditions
@@ -449,14 +453,22 @@ def translate_strips_operator(operator, dictionary, ranges, comp_axioms):
                           condition, comp_axioms, False, None)
 
     if possible_add_conflict:
+<<<<<<< Updated upstream
         print operator.name
+=======
+        print(operator.name)
+>>>>>>> Stashed changes
     assert not possible_add_conflict, "Conflicting add effects?"
 
     assign_effect, possible_assign_conflict = \
         translate_assignment_effects(operator.assign_effects, dictionary, ranges, comp_axioms, False)
     
     if possible_assign_conflict:
+<<<<<<< Updated upstream
         print operator.name
+=======
+        print(operator.name)
+>>>>>>> Stashed changes
     assert not possible_assign_conflict, "Conflicting assign effects?"
 
     pre_post = []
@@ -502,7 +514,11 @@ def translate_temporal_strips_operator_aux(operator, dictionary, ranges,
     duration = translate_operator_duration(operator.duration, dictionary)
 
     if condition is None:
+<<<<<<< Updated upstream
         print "operator condition is None (invalid)"
+=======
+        print("operator condition is None (invalid)")
+>>>>>>> Stashed changes
         return None
 
     effect = []
@@ -519,7 +535,11 @@ def translate_temporal_strips_operator_aux(operator, dictionary, ranges,
         possible_add_conflict |= poss_conflict
 
     if possible_add_conflict:
+<<<<<<< Updated upstream
         print operator.name
+=======
+        print(operator.name)
+>>>>>>> Stashed changes
     assert not possible_add_conflict
 
     assign_effect = []
@@ -533,7 +553,11 @@ def translate_temporal_strips_operator_aux(operator, dictionary, ranges,
         possible_assign_conflict |= conflict
 
     if possible_assign_conflict:
+<<<<<<< Updated upstream
         print operator.name
+=======
+        print(operator.name)
+>>>>>>> Stashed changes
     assert not possible_assign_conflict
 
     pre_post = [[],[]]
@@ -671,7 +695,11 @@ def translate_task(strips_to_sas, ranges, init, goals, actions,
     # if any atom in goal is false, the task is unsolvable
     for fa in false_atoms:
         if fa in goals:
+<<<<<<< Updated upstream
             print "False atom in goal:"
+=======
+            print("False atom in goal:")
+>>>>>>> Stashed changes
             fa.dump()
             return unsolvable_sas_task("False atom in goal")
 
@@ -747,7 +775,11 @@ def translate_task(strips_to_sas, ranges, init, goals, actions,
                              temp_operators, axioms, sas_num_axioms, comp_axioms[1])
 
 def unsolvable_sas_task(msg):
+<<<<<<< Updated upstream
     print "%s! Generating unsolvable task..." % msg
+=======
+    print("%s! Generating unsolvable task...") % msg
+>>>>>>> Stashed changes
     variables = sas_tasks.SASVariables([2], [-1])
     init = sas_tasks.SASInit([0])
     goal = sas_tasks.SASGoal([(0, 1)])
@@ -760,7 +792,11 @@ def unsolvable_sas_task(msg):
             temp_operators, axioms, num_axioms, comp_axioms)
 
 def pddl_to_sas(task):
+<<<<<<< Updated upstream
     print "Instantiating..."
+=======
+    print("Instantiating...")
+>>>>>>> Stashed changes
     (relaxed_reachable, atoms, num_fluents, actions, 
         durative_actions, axioms, num_axioms, 
         reachable_action_params) = instantiate.explore(task)
@@ -790,9 +826,15 @@ def pddl_to_sas(task):
     num_axioms_by_layer, max_num_layer, num_axiom_map, const_num_axioms = \
         numeric_axiom_rules.handle_axioms(num_axioms)
 
+<<<<<<< Updated upstream
     print "Building STRIPS to SAS dictionary..."
     ranges, strips_to_sas = strips_to_sas_dictionary(groups, num_axioms, num_axiom_map, num_fluents)
     print "Translating task..."
+=======
+    print("Building STRIPS to SAS dictionary...")
+    ranges, strips_to_sas = strips_to_sas_dictionary(groups, num_axioms, num_axiom_map, num_fluents)
+    print("Translating task...")
+>>>>>>> Stashed changes
     assert not actions, "There shouldn't be any actions - just temporal actions"
     sas_task = translate_task(strips_to_sas, ranges, task.init, goal_list,
                               actions, durative_actions, axioms, num_axioms,
@@ -822,7 +864,11 @@ def build_mutex_key(strips_to_sas, groups):
                 for var, val in strips_to_sas[fact]:
                     group_key.append((var, val, str(fact)))
             else:
+<<<<<<< Updated upstream
                 print "not in strips_to_sas, left out:", fact
+=======
+                print("not in strips_to_sas, left out:"), fact
+>>>>>>> Stashed changes
         group_keys.append(group_key)
     return group_keys
 
@@ -856,7 +902,11 @@ def write_mutex_key(mutex_key):
             rest = str(fact).split("(")[1]
             rest = rest.strip(")").strip()
             if not rest == "":
+<<<<<<< Updated upstream
                 #print "there are args" , rest
+=======
+                #print("there are args") , rest
+>>>>>>> Stashed changes
                 args = rest.split(",")
             else:
                 args = []
@@ -872,8 +922,13 @@ def write_mutex_key(mutex_key):
 
 if __name__ == "__main__":
     import pddl
+<<<<<<< Updated upstream
     print "Parsing..."
     task = pddl.open()
+=======
+    print("Parsing...")
+    task = pddl.open_pddl()
+>>>>>>> Stashed changes
     if task.domain_name in ["protocol", "rover"]:
         # This is, of course, a HACK HACK HACK!
         # The real issue is that ALLOW_CONFLICTING_EFFECTS = True
@@ -889,6 +944,12 @@ if __name__ == "__main__":
     # psyco.full()
 
     sas_task = pddl_to_sas(task)
+<<<<<<< Updated upstream
     print "Writing output..."
     sas_task.output(file("output.sas", "w"))
     print "Done!"
+=======
+    print("Writing output...")
+    sas_task.output(file("output.sas", "w"))
+    print("Done!")
+>>>>>>> Stashed changes

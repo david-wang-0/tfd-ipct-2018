@@ -2,10 +2,17 @@
 
 import copy
 
+<<<<<<< Updated upstream
 import conditions
 import effects
 import f_expression
 import pddl_types
+=======
+import pddl.conditions as conditions
+import pddl.effects as effects
+import pddl.f_expression as f_expression
+import pddl.pddl_types as pddl_types
+>>>>>>> Stashed changes
 
 class Action(object):
     def __init__(self, name, parameters, precondition, effects):
@@ -16,6 +23,7 @@ class Action(object):
         self.uniquify_variables()
     def parse(alist):
         iterator = iter(alist)
+<<<<<<< Updated upstream
         assert iterator.next() == ":action"
         name = iterator.next()
         parameters_tag_opt = iterator.next()
@@ -23,17 +31,35 @@ class Action(object):
             parameters = pddl_types.parse_typed_list(iterator.next(),
                                                      only_variables=True)
             precondition_tag_opt = iterator.next()
+=======
+        assert next(iterator) == ":action"
+        name = next(iterator)
+        parameters_tag_opt = next(iterator)
+        if parameters_tag_opt == ":parameters":
+            parameters = pddl_types.parse_typed_list(next(iterator),
+                                                     only_variables=True)
+            precondition_tag_opt = next(iterator)
+>>>>>>> Stashed changes
         else:
             parameters = []
             precondition_tag_opt = parameters_tag_opt
         if precondition_tag_opt == ":precondition":
+<<<<<<< Updated upstream
             precondition = conditions.parse_condition(iterator.next())
             effect_tag = iterator.next()
+=======
+            precondition = conditions.parse_condition(next(iterator))
+            effect_tag = next(iterator)
+>>>>>>> Stashed changes
         else:
             precondition = conditions.Conjunction([])
             effect_tag = precondition_tag_opt
         assert effect_tag == ":effect"
+<<<<<<< Updated upstream
         effect_list = iterator.next()
+=======
+        effect_list = next(iterator)
+>>>>>>> Stashed changes
         eff = []
         effects.parse_effects(effect_list,eff)
         for rest in iterator:
@@ -41,10 +67,17 @@ class Action(object):
         return Action(name, parameters, precondition, eff)
     parse = staticmethod(parse)
     def dump(self):
+<<<<<<< Updated upstream
         print "%s(%s)" % (self.name, ", ".join(map(str, self.parameters)))
         print "Precondition:"
         self.condition.dump()
         print "Effects:"
+=======
+        print("%s(%s)" % (self.name, ", ".join(map(str, self.parameters))))
+        print("Precondition:")
+        self.condition.dump()
+        print("Effects:")
+>>>>>>> Stashed changes
         for eff in self.effects:
             eff.dump()
     def uniquify_variables(self):
@@ -89,7 +122,11 @@ class Action(object):
             self.condition.instantiate(var_mapping, init_facts, fluent_facts, 
                                        init_function_vals, fluent_functions, task,
                                        new_axiom, precondition)
+<<<<<<< Updated upstream
         except conditions.Impossible:
+=======
+        except(conditions.Impossible):
+>>>>>>> Stashed changes
             return None
         effects = []
         for eff in self.effects:
@@ -113,6 +150,7 @@ class DurativeAction(object):
         self.uniquify_variables()
     def parse(alist):
         iterator = iter(alist)
+<<<<<<< Updated upstream
         assert iterator.next() == ":durative-action"
         name = iterator.next()
         parameters_tag_opt = iterator.next()
@@ -120,11 +158,24 @@ class DurativeAction(object):
             parameters = pddl_types.parse_typed_list(iterator.next(),
                                                      only_variables=True)
             duration_tag = iterator.next()
+=======
+        assert next(iterator) == ":durative-action"
+        name = next(iterator)
+        parameters_tag_opt = next(iterator)
+        if parameters_tag_opt == ":parameters":
+            parameters = pddl_types.parse_typed_list(next(iterator),
+                                                     only_variables=True)
+            duration_tag = next(iterator)
+>>>>>>> Stashed changes
         else:
             parameters = []
             duration_tag = parameters_tag_opt
         assert duration_tag == ":duration"
+<<<<<<< Updated upstream
         duration_list = iterator.next()
+=======
+        duration_list = next(iterator)
+>>>>>>> Stashed changes
         if duration_list[0] == "and":
             duration_list = duration_list[1:]
         else:
@@ -143,16 +194,27 @@ class DurativeAction(object):
             op = item[0]
             value = f_expression.parse_expression(item[2])
             duration += [(op,value)]
+<<<<<<< Updated upstream
         condition_tag = iterator.next()
         if condition_tag == ":condition":
             condition = conditions.parse_durative_condition(iterator.next())
             effect_tag = iterator.next()
+=======
+        condition_tag = next(iterator)
+        if condition_tag == ":condition":
+            condition = conditions.parse_durative_condition(next(iterator))
+            effect_tag = next(iterator)
+>>>>>>> Stashed changes
         else:
             condition = conditions.parse_durative_condition([])
             effect_tag = condition_tag
         assert effect_tag == ":effect"
 
+<<<<<<< Updated upstream
         effect_list = iterator.next()
+=======
+        effect_list = next(iterator)
+>>>>>>> Stashed changes
         effect = [[],[]]
         effects.parse_durative_effects(effect_list, effect)
         for rest in iterator:
@@ -161,6 +223,7 @@ class DurativeAction(object):
     parse = staticmethod(parse)
     def dump(self):
         if self.orig_parameter_length != len(self.parameters):
+<<<<<<< Updated upstream
             print "%s(%s, (%s))" % (self.name, 
                               ", ".join(map(str, self.parameters[0:self.orig_parameter_length])), 
                               ", ".join(map(str, self.parameters[self.orig_parameter_length:])))
@@ -186,6 +249,33 @@ class DurativeAction(object):
         for eff in self.effects[0]:
             eff.dump()
         print "end effects:"
+=======
+            print ("%s(%s, (%s))" % (self.name, 
+                              ", ".join(map(str, self.parameters[0:self.orig_parameter_length])), 
+                              ", ".join(map(str, self.parameters[self.orig_parameter_length:]))))
+        else:
+            print("%s(%s)" % (self.name, ", ".join(map(str, self.parameters))))
+        if len(self.duration[0]) > 0:
+            print("duration (values from start):")
+            for (op, val) in self.duration[0]:
+                print("  " + op)
+                val.dump("    ")
+        if len(self.duration[1]) > 0:
+            print("duration (values from end):")
+            for (op, val) in self.duration[1]:
+                print("  " + op)
+                val.dump("    ")
+        print("start condition:")
+        self.condition[0].dump()
+        print("over all condition:")
+        self.condition[1].dump()
+        print("end condition:")
+        self.condition[2].dump()
+        print("start effects:")
+        for eff in self.effects[0]:
+            eff.dump()
+        print("end effects:")
+>>>>>>> Stashed changes
         for eff in self.effects[1]:
             eff.dump()
     def __str__(self):
@@ -217,9 +307,15 @@ class DurativeAction(object):
                             [(op,pne.instantiate(var_mapping, fluent_functions, 
                                               init_function_vals, task, new_axiom)) 
                                               for op,pne in self.duration[1]]]
+<<<<<<< Updated upstream
         except ValueError, e:
             print "dropped action %s" % name
             print "Error: %s" % e
+=======
+        except(ValueError, e):
+            print("dropped action %s" % name)
+            print("Error: %s" % e)
+>>>>>>> Stashed changes
             return None
         
         inst_conditions = [[],[],[]]
@@ -228,7 +324,11 @@ class DurativeAction(object):
                 condition.instantiate(var_mapping, init_facts, fluent_facts, 
                                       init_function_vals, fluent_functions, task,
                                       new_axiom, inst_conditions[time])
+<<<<<<< Updated upstream
             except conditions.Impossible:
+=======
+            except(conditions.Impossible):
+>>>>>>> Stashed changes
                 return None
         effects = [[],[]]
         for time,timed_effects in enumerate(self.effects):
@@ -275,6 +375,7 @@ class PropositionalAction:
             else:
                 self.add_effects.append((condition, effect))
     def dump(self):
+<<<<<<< Updated upstream
         print self.name
         for fact in self.condition:
             print "PRE: %s" % fact
@@ -284,6 +385,17 @@ class PropositionalAction:
             print "DEL: %s -> %s" % (", ".join(map(str, cond)), fact)
         for cond, fact in self.assign_effects:
             print "ASS: %s -> %s" % (", ".join(map(str, cond)), fact)
+=======
+        print(self.name)
+        for fact in self.condition:
+            print("PRE: %s" % fact)
+        for cond, fact in self.add_effects:
+            print("ADD: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.del_effects:
+            print("DEL: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.assign_effects:
+            print("ASS: %s -> %s" % (", ".join(map(str, cond)), fact))
+>>>>>>> Stashed changes
 
 class PropositionalDurativeAction:
     def __init__(self, name, duration, conditions, effects):
@@ -302,6 +414,7 @@ class PropositionalDurativeAction:
                 else:
                     self.add_effects[time].append((condition, effect))
     def dump(self):
+<<<<<<< Updated upstream
         print self.name
         for duration in self.duration[0]:
             print "START DUR: %s %s" % (duration[0],duration[1])
@@ -325,3 +438,28 @@ class PropositionalDurativeAction:
             print "ASS START: %s -> %s" % (", ".join(map(str, cond)), fact)
         for cond, fact in self.assign_effects[1]:
             print "ASS END: %s -> %s" % (", ".join(map(str, cond)), fact)
+=======
+        print(self.name)
+        for duration in self.duration[0]:
+            print("START DUR: %s %s" % (duration[0],duration[1]))
+        for duration in self.duration[1]:
+            print("END DUR: %s %s" % (duration[0],duration[1]))
+        for fact in self.conditions[0]:
+            print("START COND: %s" % fact)
+        for fact in self.conditions[1]:
+            print("OVER ALL COND: %s" % fact)
+        for fact in self.conditions[2]:
+            print("END COND: %s" % fact)
+        for cond, fact in self.add_effects[0]:
+            print("ADD START: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.add_effects[1]:
+            print("ADD END: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.del_effects[0]:
+            print("DEL START: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.del_effects[1]:
+            print("DEL END: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.assign_effects[0]:
+            print("ASS START: %s -> %s" % (", ".join(map(str, cond)), fact))
+        for cond, fact in self.assign_effects[1]:
+            print("ASS END: %s -> %s" % (", ".join(map(str, cond)), fact))
+>>>>>>> Stashed changes

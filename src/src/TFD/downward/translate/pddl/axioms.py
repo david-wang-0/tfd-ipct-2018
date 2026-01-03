@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 import conditions
 import predicates
 import f_expression
+=======
+import pddl.conditions
+import pddl.predicates
+import pddl.f_expression
+>>>>>>> Stashed changes
 
 class Axiom(object):
   def __init__(self, name, parameters, condition):
@@ -16,7 +22,11 @@ class Axiom(object):
     return Axiom(predicate.name, predicate.arguments, condition)
   parse = staticmethod(parse)
   def dump(self):
+<<<<<<< Updated upstream
     print "Axiom %s(%s)" % (self.name, ", ".join(map(str, self.parameters)))
+=======
+    print("Axiom %s(%s)" % (self.name, ", ".join(map(str, self.parameters))))
+>>>>>>> Stashed changes
     self.condition.dump()
   def uniquify_variables(self):
     self.type_map = dict([(par.name, par.type) for par in self.parameters])
@@ -48,11 +58,19 @@ class PropositionalAxiom:
     return PropositionalAxiom(self.name, list(self.condition), self.effect)
   def dump(self):
     if self.effect.negated:
+<<<<<<< Updated upstream
       print "not",
     print self.name
     for fact in self.condition:
       print "PRE: %s" % fact
     print "EFF: %s" % self.effect
+=======
+      print("not",)
+    print(self.name)
+    for fact in self.condition:
+      print("PRE: %s" % fact)
+    print("EFF: %s" % self.effect)
+>>>>>>> Stashed changes
 
 class NumericAxiom(object):
   def __init__(self, name, parameters, op, parts):
@@ -70,7 +88,11 @@ class NumericAxiom(object):
     if self.op:
         op = self.op + " "
     body = "%s" % " ".join(map(str, self.parts))
+<<<<<<< Updated upstream
     print "%s%s -: %s%s" % (indent,head,op,body)
+=======
+    print("%s%s -: %s%s" % (indent,head,op,body))
+>>>>>>> Stashed changes
   def instantiate(self, var_mapping, fluent_functions, init_function_vals, task, new_constant_axioms):
     arg_list = [var_mapping[conditions.Variable(par.name)] for par in self.parameters]
     name = "(%s %s)" % (self.name, " ".join([arg.name for arg in arg_list]))
@@ -98,9 +120,17 @@ class PropositionalNumericAxiom(object):
   def __hash__(self):
     return hash((self.__class__,self.name))
   def dump(self):
+<<<<<<< Updated upstream
     print self.name
     print "OP: %s" % self.op
     for part in self.parts:
         print "PART: %s" % part
     print "EFF: %s" % self.effect
+=======
+    print(self.name)
+    print("OP: %s" % self.op)
+    for part in self.parts:
+        print("PART: %s" % part)
+    print("EFF: %s" % self.effect)
+>>>>>>> Stashed changes
 

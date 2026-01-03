@@ -156,14 +156,24 @@ class Unifier:
   def dump(self): 
     predicates = self.predicate_to_rule_generator.keys()
     predicates.sort()
+<<<<<<< Updated upstream
     print "Unifier:"
     for pred in predicates:
       print "  %s:" % pred
+=======
+    print("Unifier:")
+    for pred in predicates:
+      print("  %s:") % pred
+>>>>>>> Stashed changes
       rule_gen = self.predicate_to_rule_generator[pred]
       rule_gen.dump(())
     
 class LeafGenerator:
+<<<<<<< Updated upstream
   index = sys.maxint
+=======
+  index = sys.maxsize 
+>>>>>>> Stashed changes
   def __init__(self):
     self.matches = []
   def generate(self, atom, result):
@@ -184,9 +194,15 @@ class LeafGenerator:
   def dump(self, conditions):
     spaces = "  " + "  " * len(conditions)
     if conditions:
+<<<<<<< Updated upstream
       print "%s%s" % (spaces, ", ".join(conditions))
     for match in self.matches:
       print "%s  %s" % (spaces, match)
+=======
+      print("%s%s" % (spaces, ", ").join(conditions))
+    for match in self.matches:
+      print("%s  %s" % (spaces, match))
+>>>>>>> Stashed changes
 
 class MatchGenerator:
   def __init__(self, index, next):
@@ -222,9 +238,15 @@ class MatchGenerator:
   def dump(self, conditions):
     spaces = "  " + "  " * len(conditions)
     if conditions:
+<<<<<<< Updated upstream
       print "%s%s" % (spaces, ", ".join(conditions))
     for match in self.matches:
       print "%s  %s" % (spaces, match)
+=======
+      print("%s%s" % (spaces, ", ").join(conditions))
+    for match in self.matches:
+      print("%s  %s") % (spaces, match)
+>>>>>>> Stashed changes
     self.next.dump(conditions)
     keys = self.match_generator.keys()
     keys.sort()
@@ -257,7 +279,11 @@ def compute_model(prog):
   unifier = Unifier(rules)
   # unifier.dump()
   queue = Queue([fact.atom for fact in prog.facts])
+<<<<<<< Updated upstream
   print "Starting instantiation [%d rules]..." % len(rules)
+=======
+  print("Starting instantiation [%d rules]...") % len(rules)
+>>>>>>> Stashed changes
   while queue:
     next_atom = queue.pop()
     matches = unifier.unify(next_atom)
@@ -268,6 +294,7 @@ def compute_model(prog):
 
 if __name__ == "__main__":
   import pddl_to_prolog
+<<<<<<< Updated upstream
   print "Parsing..."
   task = pddl.open()
   print "Writing rules..."
@@ -275,3 +302,12 @@ if __name__ == "__main__":
   print "Computing model..."
   for atom in compute_model(prog):
     print atom
+=======
+  print("Parsing...")
+  task = pddl.open()
+  print("Writing rules...")
+  prog = pddl_to_prolog.translate(task)
+  print("Computing model...")
+  for atom in compute_model(prog):
+    print(atom)
+>>>>>>> Stashed changes

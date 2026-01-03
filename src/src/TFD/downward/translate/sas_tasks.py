@@ -15,6 +15,7 @@ class SASTask:
     self.goal.output(stream)
     if len(self.operators) > 0:
         assert len(self.temp_operators) == 0
+<<<<<<< Updated upstream
         print >> stream, len(self.operators)
         for op in self.operators:
             op.output(stream)
@@ -29,6 +30,22 @@ class SASTask:
     for axiom in self.comp_axioms:
       axiom.output(stream)
     print >> stream, len(self.num_axioms)
+=======
+        print(len(self.operators), file=stream)
+        for op in self.operators:
+            op.output(stream)
+    else:
+        print(len(self.temp_operators), file=stream)
+        for op in self.temp_operators:
+          op.output(stream)
+    print(len(self.axioms), file=stream)
+    for axiom in self.axioms:
+      axiom.output(stream)
+    print(len(self.comp_axioms), file=stream)
+    for axiom in self.comp_axioms:
+      axiom.output(stream)
+    print(len(self.num_axioms), file=stream)
+>>>>>>> Stashed changes
     for axiom in self.num_axioms:
       axiom.output(stream)
 
@@ -42,6 +59,7 @@ class SASVariables:
         axiom_str = " [axiom layer %d]" % axiom_layer
       else:
         axiom_str = ""
+<<<<<<< Updated upstream
       print "v%d in {%s}%s" % (var, range(rang), axiom_str)
   def output(self, stream):
     print >> stream, "begin_variables"
@@ -49,6 +67,15 @@ class SASVariables:
     for var, (rang, axiom_layer) in enumerate(zip(self.ranges, self.axiom_layers)):
       print >> stream, "var%d %d %d" % (var, rang, axiom_layer)
     print >> stream, "end_variables"
+=======
+      print("v%d in {%s}%s") % (var, range(rang), axiom_str)
+  def output(self, stream):
+    print("begin_variables", file=stream)
+    print(len(self.ranges), file=stream)
+    for var, (rang, axiom_layer) in enumerate(zip(self.ranges, self.axiom_layers)):
+      print("var%d %d %d" % (var, rang, axiom_layer), file=stream)
+    print("end_variables", file=stream)
+>>>>>>> Stashed changes
 
 class SASInit:
   def __init__(self, values):
@@ -56,18 +83,28 @@ class SASInit:
   def dump(self):
     for var, val in enumerate(self.values):
       if val != -1:
+<<<<<<< Updated upstream
         print "v%d: %d" % (var, val)
   def output(self, stream):
     print >> stream, "begin_state"
     for val in self.values:
       print >> stream, val
     print >> stream, "end_state"
+=======
+        print("v%d: %d" % (var, val))
+  def output(self, stream):
+    print("begin_state", file=stream)
+    for val in self.values:
+      print(val, file=stream)
+    print("end_state", file=stream)
+>>>>>>> Stashed changes
 
 class SASGoal:
   def __init__(self, pairs):
     self.pairs = sorted(pairs)
   def dump(self):
     for var, val in self.pairs:
+<<<<<<< Updated upstream
       print "v%d: %d" % (var, val)
   def output(self, stream):
     print >> stream, "begin_goal"
@@ -75,6 +112,15 @@ class SASGoal:
     for var, val in self.pairs:
       print >> stream, var, val
     print >> stream, "end_goal"
+=======
+      print("v%d: %d" % (var, val))
+  def output(self, stream):
+    print("begin_goal", file=stream)
+    print(len(self.pairs), file=stream)
+    for var, val in self.pairs:
+      print(var, val, file=stream)
+    print("end_goal", file=stream)
+>>>>>>> Stashed changes
 
 class SASOperator:
   def __init__(self, name, prevail, pre_post, assign_effects):
@@ -83,16 +129,25 @@ class SASOperator:
     self.pre_post = sorted(pre_post)
     self.assign_effects = assign_effects
   def dump(self):
+<<<<<<< Updated upstream
     print self.name
     print "Prevail:"
     for var, val in self.prevail:
       print "  v%d: %d" % (var, val)
     print "Pre/Post:"
+=======
+    print(self.name)
+    print("Prevail:")
+    for var, val in self.prevail:
+      print("  v%d: %d" % (var, val))
+    print("Pre/Post:")
+>>>>>>> Stashed changes
     for var, pre, post, cond in self.pre_post:
       if cond:
         cond_str = " [%s]" % ", ".join(["%d: %d" % tuple(c) for c in cond])
       else:
         cond_str = ""
+<<<<<<< Updated upstream
       print "  v%d: %d -> %d%s" % (var, pre, post, cond_str)
   def output(self, stream):
     print >> stream, "begin_operator"
@@ -110,6 +165,25 @@ class SASOperator:
     for assignment in self.assign_effects:
       assignment.output(stream)
     print >> stream, "end_operator"
+=======
+      print("  v%d: %d -> %d%s") % (var, pre, post, cond_str)
+  def output(self, stream):
+    print("begin_operator", file=stream)
+    print(self.name[1:-1], file=stream)
+    print(len(self.prevail), file=stream)
+    for var, val in self.prevail:
+      print(var, val, file=stream)
+    num = len(self.pre_post) + len(self.assign_effects)
+    print(num, file=stream)
+    for var, pre, post, cond in self.pre_post:
+      print(len(cond), file=stream)
+      for cvar, cval in cond:
+        print(cvar, cval, file=stream)
+      print(var, pre, post, file=stream)
+    for assignment in self.assign_effects:
+      assignment.output(stream)
+    print("end_operator", file=stream)
+>>>>>>> Stashed changes
 
 class SASTemporalOperator:
   def __init__(self, name, duration, prevail, pre_post, assign_effects):
@@ -128,6 +202,7 @@ class SASTemporalOperator:
     self.pre_post = pre_post
     self.assign_effects = assign_effects
   def output(self, stream):
+<<<<<<< Updated upstream
     print >> stream, "begin_operator"
     print >> stream, self.name[1:-1]
     self.duration[0][0].output(stream)
@@ -147,13 +222,38 @@ class SASTemporalOperator:
         for assignment in self.assign_effects[time]:
             assignment.output(stream)
     print >> stream, "end_operator"
+=======
+    print("begin_operator", file=stream)
+    print(self.name[1:-1], file=stream)
+    self.duration[0][0].output(stream)
+    for time in range(3):
+        print(len(self.prevail[time]), file=stream)
+        for var, val in self.prevail[time]:
+            print(var, val, file=stream)
+    for time in range(2):
+        num = len(self.pre_post[time]) + len(self.assign_effects[time])
+        print(num, file=stream)
+        for var, pre, post, cond in self.pre_post[time]:
+            for cond_time in range(3):
+                print(len(cond[cond_time]), file=stream)
+                for cvar, cval in cond[cond_time]:
+                    print(cvar, cval, file=stream)
+            print(var, pre, post, file=stream)
+        for assignment in self.assign_effects[time]:
+            assignment.output(stream)
+    print("end_operator", file=stream)
+>>>>>>> Stashed changes
 
 class SASDuration:
   def __init__(self, op, var):
     self.op = op
     self.var = var
   def output(self, stream):
+<<<<<<< Updated upstream
     print >> stream, self.op, self.var 
+=======
+    print(self.op, self.var , file=stream)
+>>>>>>> Stashed changes
 
 class SASAssignmentEffect:
   def __init__(self, var, op, valvar, prevail, temporal=False):
@@ -165,6 +265,7 @@ class SASAssignmentEffect:
   def output(self, stream):
     if self.temporal:
         for time in range(3):
+<<<<<<< Updated upstream
             print >> stream, len(self.prevail[time]),
             for var, val in self.prevail[time]:
                 print >> stream, var, val,
@@ -173,6 +274,16 @@ class SASAssignmentEffect:
         for var, val in self.prevail:
             print >> stream, var, val,
     print >> stream, self.var, self.op, self.valvar
+=======
+            print(len(self.prevail[time]), file=stream)
+            for var, val in self.prevail[time]:
+                print(var, val, file=stream)
+    else:
+        print(len(self.prevail), file=stream)
+        for var, val in self.prevail:
+            print(var, val, file=stream)
+    print(self.var, self.op, self.valvar, file=stream)
+>>>>>>> Stashed changes
 
 class SASAxiom:
   def __init__(self, condition, effect):
@@ -183,6 +294,7 @@ class SASAxiom:
     for _, val in condition:
       assert val >= 0, condition
   def dump(self):
+<<<<<<< Updated upstream
     print "Condition:"
     for var, val in self.condition:
       print "  v%d: %d" % (var, val)
@@ -197,6 +309,22 @@ class SASAxiom:
     var, val = self.effect
     print >> stream, var, 1 - val, val
     print >> stream, "end_rule"
+=======
+    print("Condition:")
+    for var, val in self.condition:
+      print("  v%d: %d") % (var, val)
+    print("Effect:")
+    var, val = self.effect
+    print("  v%d: %d") % (var, val)
+  def output(self, stream):
+    print("begin_rule", file=stream)
+    print(len(self.condition), file=stream)
+    for var, val in self.condition:
+      print(var, val, file=stream)
+    var, val = self.effect
+    print(var, 1 - val, val, file=stream)
+    print("end_rule", file=stream)
+>>>>>>> Stashed changes
 
 class SASCompareAxiom:
   def __init__(self, comp, parts, effect):
@@ -206,11 +334,19 @@ class SASCompareAxiom:
   def dump(self):
     values = (self.effect, self.comp, 
         " ".join([str(var) for var in self.parts]))
+<<<<<<< Updated upstream
     print "v%d: %s %s" % values
   def output(self, stream):
     values = (self.effect, self.comp, 
         " ".join([str(var) for var in self.parts]))
     print >> stream, "%d %s %s" % values
+=======
+    print("v%d: %s %s") % values
+  def output(self, stream):
+    values = (self.effect, self.comp, 
+        " ".join([str(var) for var in self.parts]))
+    print("%d %s %s" % values, file=stream)
+>>>>>>> Stashed changes
 
 class SASNumericAxiom:
   def __init__(self, op, parts, effect):
@@ -221,9 +357,17 @@ class SASNumericAxiom:
   def dump(self):
     values = (self.effect, self.op, 
         " ".join([str(var) for var in self.parts]))
+<<<<<<< Updated upstream
     print "v%d: %s %s" % values
   def output(self, stream):
     values = (self.effect, self.op, 
         " ".join([str(var) for var in self.parts]))
     print >> stream, "%d %s %s" % values
+=======
+    print("v%d: %s %s") % values
+  def output(self, stream):
+    values = (self.effect, self.op, 
+        " ".join([str(var) for var in self.parts]))
+    print("%d %s %s" % values, file=stream)
+>>>>>>> Stashed changes
 

@@ -45,15 +45,24 @@ def instantiate(task, model):
   ## HACK: This is a not very clean way of initializing the previously
   ## added functions that store the duration of an action to a haphazardly value
   for atom in model:
+<<<<<<< Updated upstream
   	if isinstance(atom.predicate,str) and atom.predicate.startswith("defined!duration_"):
 		pne = pddl.PrimitiveNumericExpression(atom.predicate.replace("defined!","",1),atom.args)
 		value = pddl.NumericConstant(1.0)
 		init_assign = pddl.Assign(pne, value)
 		task.init.append(init_assign)
+=======
+    if isinstance(atom.predicate,str) and atom.predicate.startswith("defined!duration_"):
+      pne = pddl.PrimitiveNumericExpression(atom.predicate.replace("defined!","",1),atom.args)
+      value = pddl.NumericConstant(1.0)
+      init_assign = pddl.Assign(pne, value)
+      task.init.append(init_assign)
+>>>>>>> Stashed changes
 
   init_facts = set(task.init) # TODO adapt
   init_function_vals = init_function_values(init_facts)
 
+<<<<<<< Updated upstream
 #  print "** fluent functions"
 #  for function in fluent_functions:
 #    function.dump()
@@ -61,6 +70,15 @@ def instantiate(task, model):
 #  for fact in fluent_facts:
 #    print fact
 #  print "** init facts"
+=======
+#  print("** fluent functions")
+#  for function in fluent_functions:
+#    function.dump()
+#  print("** fluent facts")
+#  for fact in fluent_facts:
+#    print fact
+#  print("** init facts")
+>>>>>>> Stashed changes
 #  for fact in init_facts:
 #    print fact
 
@@ -141,26 +159,47 @@ if __name__ == "__main__":
   task = pddl.open()
   (relaxed_reachable, atoms, num_fluents, actions,durative_actions, 
         axioms, num_axioms) = explore(task)
+<<<<<<< Updated upstream
   print "goal relaxed reachable: %s" % relaxed_reachable
   print "%d atoms:" % len(atoms)
   for atom in atoms:
     print " ", atom
   print
   print "%d actions:" % len(actions)
+=======
+  print("goal relaxed reachable: %s") % relaxed_reachable
+  print("%d atoms:") % len(atoms)
+  for atom in atoms:
+    print(" "), atom
+  print
+  print("%d actions:") % len(actions)
+>>>>>>> Stashed changes
   for action in actions:
     action.dump()
     print
   print
+<<<<<<< Updated upstream
   print "%d durative actions:" % len(durative_actions)
+=======
+  print("%d durative actions:") % len(durative_actions)
+>>>>>>> Stashed changes
   for action in durative_actions:
     action.dump()
     print
   print
+<<<<<<< Updated upstream
   print "%d axioms:" % len(axioms)
   for axiom in axioms:
     axiom.dump()
     print
   print "%d numeric axioms:" % len(num_axioms)
+=======
+  print("%d axioms:") % len(axioms)
+  for axiom in axioms:
+    axiom.dump()
+    print
+  print("%d numeric axioms:") % len(num_axioms)
+>>>>>>> Stashed changes
   for axiom in num_axioms:
     axiom.dump()
     print

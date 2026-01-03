@@ -103,7 +103,11 @@ MAX_TIME = 300
 
 def find_invariants(task, safe, reachable_action_params):
     candidates = deque(get_initial_invariants(task, safe))
+<<<<<<< Updated upstream
     print len(candidates), "initial candidates"
+=======
+    print(len(candidates), "initial candidates")
+>>>>>>> Stashed changes
     seen_candidates = set(candidates)
 
     balance_checker = BalanceChecker(task, reachable_action_params, safe)
@@ -117,7 +121,11 @@ def find_invariants(task, safe, reachable_action_params):
     while candidates:
         candidate = candidates.popleft()
         if time.clock() - start_time > MAX_TIME:
+<<<<<<< Updated upstream
             print "Time limit reached, aborting invariant generation"
+=======
+            print("Time limit reached, aborting invariant generation")
+>>>>>>> Stashed changes
             return
         if candidate.check_balance(balance_checker, enqueue_func):
             yield candidate
@@ -152,6 +160,7 @@ def get_groups(task, safe=True, reachable_action_params=None):
 
 if __name__ == "__main__":
     import pddl
+<<<<<<< Updated upstream
     print "Parsing..."
     task = pddl.open()
     print "Finding invariants..."
@@ -161,3 +170,14 @@ if __name__ == "__main__":
     groups = get_groups(task)
     for group in groups:
         print "[%s]" % ", ".join(map(str, group))
+=======
+    print("Parsing...")
+    task = pddl.open()
+    print("Finding invariants...")
+    for invariant in find_invariants(task):
+        print(invariant)
+    print("Finding fact groups...")
+    groups = get_groups(task)
+    for group in groups:
+        print("[%s]" % ", ").join(map(str, group))
+>>>>>>> Stashed changes

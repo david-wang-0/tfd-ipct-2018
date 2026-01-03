@@ -1,8 +1,14 @@
 import itertools
 
+<<<<<<< Updated upstream
 import pddl_types
 import f_expression
 import tasks
+=======
+import pddl.pddl_types as pddl_types
+import pddl.f_expression as f_expression
+import pddl.tasks as tasks
+>>>>>>> Stashed changes
 
 def parse_condition(alist):
     condition = parse_condition_aux(alist, False)
@@ -129,6 +135,7 @@ def parse_term(term):
 def dump_temporal_condition(condition,indent="  "):
     assert len(condition)==3
     if not isinstance(condition[0],Truth):
+<<<<<<< Updated upstream
         print "%sat start:" % indent
         condition[0].dump(indent+"  ")
     if not isinstance(condition[1],Truth):
@@ -136,6 +143,15 @@ def dump_temporal_condition(condition,indent="  "):
         condition[1].dump(indent+"  ")
     if not isinstance(condition[2],Truth):
         print "%sat end:" % indent
+=======
+        print("%sat start:" % indent)
+        condition[0].dump(indent+"  ")
+    if not isinstance(condition[1],Truth):
+        print("%sover all:" % indent)
+        condition[1].dump(indent+"  ")
+    if not isinstance(condition[2],Truth):
+        print("%sat end:" % indent)
+>>>>>>> Stashed changes
         condition[2].dump(indent+"  ")
 
 
@@ -148,6 +164,7 @@ def dump_temporal_condition(condition,indent="  "):
 class Condition(object):
     def __init__(self, parts):
         self.parts = tuple(parts)
+<<<<<<< Updated upstream
         self.hash = hash((self.__class__, self.parts))
     def __hash__(self):
         return self.hash
@@ -155,6 +172,20 @@ class Condition(object):
         return not self == other
     def dump(self, indent="  "):
         print "%s%s" % (indent, self._dump())
+=======
+    def __key(self):
+        return (self.__class__, self.parts)
+    def __hash__(self):
+        return hash(self.__key())
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__key() == other.__key()
+        return NotImplemented
+    def __ne__(self, other):
+        return not self == other
+    def dump(self, indent="  "):
+        print("%s%s" % (indent, self._dump()))
+>>>>>>> Stashed changes
         for part in self.parts:
             part.dump(indent + "  ")
     def _dump(self):
@@ -211,10 +242,16 @@ class ConstantCondition(Condition):
     parts = ()
     def __init__(self):
         self.hash = hash(self.__class__)
+<<<<<<< Updated upstream
     def change_parts(self, parts):
         return self
     def __eq__(self, other):
         return self.__class__ is other.__class__
+=======
+
+    def change_parts(self, parts):
+        return self
+>>>>>>> Stashed changes
 
 class Impossible(Exception):
     pass
@@ -229,6 +266,10 @@ class Falsity(ConstantCondition):
 class Truth(ConstantCondition):
     def to_untyped_strips(self):
         return []
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     def instantiate(self, var_mapping, init_facts, fluent_facts, init_function_vals,
                     fluent_functions, task, new_axiom, result):
         pass
@@ -236,11 +277,17 @@ class Truth(ConstantCondition):
         return Falsity()
 
 class JunctorCondition(Condition):
+<<<<<<< Updated upstream
     def __eq__(self, other):
         # Compare hash first for speed reasons.
         return (self.hash == other.hash and
                 self.__class__ is other.__class__ and
                 self.parts == other.parts)
+=======
+    def __key(self):
+        return (self.__class__, self.parts)
+        
+>>>>>>> Stashed changes
     def change_parts(self, parts):
         return self.__class__(parts)
 
@@ -294,6 +341,12 @@ class Disjunction(JunctorCondition):
         return True
 
 class QuantifiedCondition(Condition):
+<<<<<<< Updated upstream
+=======
+    def __key(self):
+        return (self.__class__, self.parameters, self.parts)
+
+>>>>>>> Stashed changes
     def __init__(self, parameters, parts):
         self.parameters = tuple(parameters)
         self.parts = tuple(parts)
@@ -304,6 +357,11 @@ class QuantifiedCondition(Condition):
                 self.__class__ is other.__class__ and
                 self.parameters == other.parameters and
                 self.parts == other.parts)
+<<<<<<< Updated upstream
+=======
+    def __hash__(self):
+        return self.hash
+>>>>>>> Stashed changes
     def _dump(self, indent="  "):
         arglist = ", ".join(map(str, self.parameters))
         return "%s %s" % (self.__class__.__name__, arglist)
@@ -354,12 +412,25 @@ class ExistentialCondition(QuantifiedCondition):
 
 class Literal(Condition):
     parts = []
+<<<<<<< Updated upstream
     def __eq__(self, other):
         # Compare hash first for speed reasons.
         return (self.hash == other.hash and
                 self.__class__ is other.__class__ and
                 self.predicate == other.predicate and
                 self.args == other.args)
+=======
+    def __key(self):
+        return (self.__class__, self.predicate, self.args)
+
+    def __hash__(self):
+        return hash(self.__key())
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__key() == other.__key()
+
+>>>>>>> Stashed changes
     def __init__(self, predicate, args):
         self.predicate = predicate
         self.args = tuple(args)
@@ -368,7 +439,11 @@ class Literal(Condition):
         return "%s %s(%s)" % (self.__class__.__name__, self.predicate,
                               ", ".join(map(str, self.args)))
     def dump(self, indent="  "):
+<<<<<<< Updated upstream
         print "%s%s %s" % (indent, self._dump(), self.predicate)
+=======
+        print("%s%s %s" % (indent, self._dump(), self.predicate))
+>>>>>>> Stashed changes
         for arg in self.args:
             arg.dump(indent + "  ")
     def change_parts(self, parts):
@@ -481,7 +556,11 @@ class NegatedFunctionComparison(FunctionComparison):
 
 class Term(object):
     def dump(self, indent="  "):
+<<<<<<< Updated upstream
         print "%s%s %s" % (indent, self._dump(), self.name)
+=======
+        print("%s%s %s" % (indent, self._dump(), self.name))
+>>>>>>> Stashed changes
         for arg in self.args:
             arg.dump(indent + "  ")
     def _dump(self):
